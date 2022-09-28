@@ -16,5 +16,8 @@ set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 add_subdirectory(external/glfw)
 target_link_libraries(${PROJECT_NAME} glfw)
 
+add_subdirectory(external/glad)
+target_link_libraries(${PROJECT_NAME} glad)
+
 install(TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
