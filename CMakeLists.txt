@@ -5,7 +5,7 @@ project(BattleCity LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(BattleCity main.cpp)
+add_executable(BattleCity src/main.cpp)
 
 install(TARGETS BattleCity
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
