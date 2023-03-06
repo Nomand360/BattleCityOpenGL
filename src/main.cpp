@@ -2,6 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Renderer/ShaderProgram.h"
+
 GLfloat point[] = {
     0.0f, 0.5f, 0.0f,
     0.5f, -0.5f, 0.0f,
@@ -85,21 +87,13 @@ int main(void)
 
     glClearColor(1, 1, 0, 1);
 
-    GLuint vs = glCreateShader(GL_VERTEX_SHADER); //создаем вертексный шейдер
-    glShaderSource(vs, 1, &vertex_shader, nullptr); //передаем программу в шейдер
-    glCompileShader(vs); //компилируем
+    std::string vertexShader(vertex_shader);
+    std::string fragmentShader(fragment_shader);
+    Renderer::ShaderProgram shaderProgram(vertexShader, fragmentShader);
 
-    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER); //создаем фрагментный шейдер
-    glShaderSource(fs, 1, &fragment_shader, nullptr); //передаем программу в шейдер
-    glCompileShader(fs); //компилируем
-
-    GLuint shader_program = glCreateProgram(); //создаем шейдер-программу
-    glAttachShader(shader_program, vs); //привязываем скомпилированные шейдеры
-    glAttachShader(shader_program, fs);
-    glLinkProgram(shader_program); //линкуем
-
-    glDeleteShader(vs); //отчищайем шейдеры
-    glDeleteShader(fs);
+    if(!shaderProgram.isCompiled()){
+        std::cerr << "Cant create shader!" << std::endl;
+    }
 
     GLuint points_vbo = 0;
     glGenBuffers(1, &points_vbo);
@@ -130,7 +124,7 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(shader_program);
+        shaderProgram.use();
         glBindVertexArray(vertex_arra_object);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         /* Swap front and back buffers */
