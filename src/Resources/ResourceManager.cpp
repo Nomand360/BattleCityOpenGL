@@ -4,6 +4,10 @@
 #include <fstream>
 #include <iostream>
 
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_ONLY_PNG
+#include "stb_image.h"
+
 ResourceManager::ResourceManager(const std::string &executablePath)
 {
     size_t found = executablePath.find_last_of("/\\");
@@ -40,7 +44,21 @@ std::shared_ptr<Renderer::ShaderProgram> ResourceManager::getShaderProgram(const
     }
     std::cerr << "Cant find shader: " << shaderName << std::endl;
     return nullptr;
- }
+}
+
+void ResourceManager::loadTexture(const std::string &textureName, const std::string &texturePath)
+{
+    int channels = 0;
+    int width = 0;
+    int height = 0;
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* pixels = stbi_load((m_path + "/" + texturePath).c_str(), &width, &height, &channels, 0);
+    if(!pixels){
+        std::cerr << "Cant load image: " << texturePath << std::endl;
+        return;
+    }
+    stbi_image_free(pixels);
+}
 
 std::string ResourceManager::getFileString(const std::string &reletiveFilaePAth) const
 {

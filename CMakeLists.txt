@@ -12,6 +12,7 @@ add_executable(${PROJECT_NAME}
     src/Renderer/ShaderProgram.cpp
     src/Resources/ResourceManager.h
     src/Resources/ResourceManager.cpp
+    src/Resources/stb_image.h
 )
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
