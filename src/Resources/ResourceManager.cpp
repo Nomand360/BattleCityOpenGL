@@ -14,7 +14,7 @@ ResourceManager::ResourceManager(const std::string &executablePath)
     m_path = executablePath.substr(0 , found);
 }
 
-std::shared_ptr<Renderer::ShaderProgram> ResourceManager::loadShagers(const std::string &shaderName, const std::string &vertexPath, const std::string &fragmentPath)
+std::shared_ptr<Renderer::ShaderProgram> ResourceManager::loadShaders(const std::string &shaderName, const std::string &vertexPath, const std::string &fragmentPath)
 {
     std::string vertexString = getFileString(vertexPath);
     if(vertexString.empty()){
@@ -60,12 +60,12 @@ void ResourceManager::loadTexture(const std::string &textureName, const std::str
     stbi_image_free(pixels);
 }
 
-std::string ResourceManager::getFileString(const std::string &reletiveFilaePAth) const
+std::string ResourceManager::getFileString(const std::string &relativeFilePath) const
 {
     std::fstream f;
-    f.open(m_path + '/' + reletiveFilaePAth, std::ios::in | std::ios::binary);
+    f.open(m_path + '/' + relativeFilePath, std::ios::in | std::ios::binary);
     if(!f.is_open()){
-        std::cerr << "Failed to open file: " << reletiveFilaePAth << std::endl;
+        std::cerr << "Failed to open file: " << relativeFilePath << std::endl;
         return "";
     }
 

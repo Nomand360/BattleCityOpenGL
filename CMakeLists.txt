@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.28)
 
 set(PROJECT_NAME BattleCity)
 project(${PROJECT_NAME} LANGUAGES CXX)

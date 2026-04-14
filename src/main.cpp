@@ -16,24 +16,6 @@ GLfloat colors[] = {
     0.0f, 1.0f, 0.0f,
     0.0f, 0.0f, 1.0f
 };
-//Вертексный шейдер
-const char* vertex_shader =
-        "#version 460\n"
-        "layout(location = 0) in vec3 vertex_position;"
-        "layout(location = 1)in vec3 vertex_color;"
-        "out vec3 color;"
-        "void main(){"
-        "   color = vertex_color;"
-        "   gl_Position = vec4(vertex_position, 1.0);"
-        "}";
-//Фрагментный шейдер
-const char* fragment_shader =
-        "#version 460\n"
-        "in vec3 color;"
-        "out vec4 frag_color;"
-        "void main(){"
-        "   frag_color = vec4(color, 1.0);"
-        "}";
 
 int g_windowSizeX = 640;
 int g_windowSizeY = 480;
@@ -90,14 +72,14 @@ int main(int argc, char** argv)
 
     {
         ResourceManager manager(argv[0]);
-        std::string shadername = "DefaultShader";
-        auto pDefaultShaderProgram = manager.loadShagers(shadername, "res/Shaders/vertex_shader.txt", "res/Shaders/fragment_shader.txt");
+        std::string shaderName = "DefaultShader";
+        auto pDefaultShaderProgram = manager.loadShaders(shaderName, "res/Shaders/vertex_shader.txt", "res/Shaders/fragment_shader.txt");
         if(!pDefaultShaderProgram){
-            std::cerr << "Can't create shader program: " << shadername << std::endl;
+            std::cerr << "Can't create shader program: " << shaderName << std::endl;
             return -1;
         }
 
-        manager.loadTexture("DefaultTExture", "res/Textures/map_16x16.png");
+        manager.loadTexture("DefaultTexture", "res/Textures/map_16x16.png");
 
         GLuint points_vbo = 0;
         glGenBuffers(1, &points_vbo);
